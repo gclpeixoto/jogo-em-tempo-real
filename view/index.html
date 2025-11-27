@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Entrar na Sala - Jogo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-box">
+    <h1>Entrar no Jogo</h1>
+
+    <input id="idSala" placeholder="ID da Sala (ou deixe vazio)" />
+    <input id="nomeJogador" placeholder="Seu Nome" />
+
+    <button onclick="entrar()">Entrar</button>
+
+    <p id="erro" class="erro"></p>
+</div>
+
+<script>
+async function entrar() {
+    const idSalaInput = document.getElementById("idSala").value.trim();
+    const nomeJogador = document.getElementById("nomeJogador").value.trim();
+
+    if (!nomeJogador) {
+        document.getElementById("erro").innerText = "Digite seu nome!";
+        return;
+    }
+
+    let idSala = idSalaInput;
+
+    // Se nenhum ID foi informado → criar sala automaticamente usando POST /salas
+    if (!idSala) {
+        try {
+            const respCriar = await fetch("http://localhost:3000/salas", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (!respCriar.ok) {
+                document.getElementById("erro").innerText = "Erro ao criar sala automaticamente!";
+                return;
+            }
+
+            const novaSala = await respCriar.json();
+            idSala = novaSala.id_sala;
+            console.log("Sala criada automaticamente:", idSala);
+
+        } catch (err) {
+            document.getElementById("erro").innerText = "Falha ao criar sala.";
+            return;
+        }
+    }
+
+    // Entrar na sala
+    const resp = await fetch("http://localhost:3000/salas/entrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idSala, nomeJogador })
+    });
+
+    if (!resp.ok) {
+        document.getElementById("erro").innerText = "Erro ao entrar na sala!";
+        return;
+    }
+
+    const data = await resp.json();
+    const jogador = data.jogador;
+
+    // Salvar dados no navegador
+    localStorage.setItem("idSala", jogador.id_sala);
+    localStorage.setItem("idJogador", jogador.id_jogador);
+    localStorage.setItem("nomeJogador", jogador.nome);
+
+    window.location.href = "jogo.html";
+}
+</script>
+
+</body>
+</html>

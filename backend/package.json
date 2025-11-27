@@ -1,0 +1,22 @@
+{
+  "name": "quiz-race-backend",
+  "version": "0.1.0",
+  "description": "Backend MVP - corrida de perguntas (Express + Socket.IO + Postgres)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --exec node src/server.js"
+  },
+  "author": "Guilherme",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: jogo_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: jogo_user
+      POSTGRES_PASSWORD: jogo_pass
+      POSTGRES_DB: jogo_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - jogo_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: jogo_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  jogo_data:

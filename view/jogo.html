@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+
+    <h2 id="perguntaTitulo">Aguardando iniciar...</h2>
+
+    <p id="textoPergunta" class="enunciado"></p> <!-- NOVO ENUNCIADO -->
+
+    <div id="alternativas" class="alternativas"></div>
+
+    <div id="placar" class="placar"></div>
+
+    <div id="status" class="status"></div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="jogo.js"></script>
+
+</body>
+</html>
